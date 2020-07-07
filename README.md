@@ -5,4 +5,4 @@ veritabanı için: projedeki veritabani.sql dosyasından oluşturulabilir.
 
 Web.configden veri tabanı bağlantı cümlesini değiştirmeyi unutmayınız.
 
-site tasarımı bana ait değildir.
+hazır site arayüzü kullanılmıştır. backend kısmı bana aittir
