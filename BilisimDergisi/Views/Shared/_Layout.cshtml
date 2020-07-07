@@ -1,0 +1,303 @@
+﻿
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/font.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/li-scroller.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <link rel="SHORTCUT ICON" href="~/images/favicon.ico">
+
+    
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    
+</head>
+<body>
+    <div id="preloader">
+        <div id="status">&nbsp;</div>
+    </div>
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    <div class="container">
+        <header id="header">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="header_top">
+                        <div class="header_top_left">
+                            <ul class="top_nav">
+                                <li><a href="@Url.Action("hakkimizda","Home")">Hakkımızda</a></li>
+                                <li><a href="@Url.Action("iletisim","Home")">İletişim</a></li>
+                                @if (Session["ID"] != null)
+                                {
+                                    if (Convert.ToBoolean(Session["yetki"]) == true)
+                                    {
+                                        <li><a href="/kategori/Index">Admin</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/news/Index">Admin</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="header_top_right">
+                            <p>
+
+                                
+                                <script type="text/javascript">
+
+<!--
+var now = new Date(); var yr = now.getYear(); var mName = now.getMonth() + 1; var dName = now.getDay() + 1;
+var yr_str = " 19"; // yil 2000 iken, 19 sayisinin çikmamasini saglayacak string
+var dayNr = ((now.getDate()<10) ? "" : "")+ now.getDate(); if(dName==1) Day = "Pazar"; if(dName==2) Day = "Pazartesi"; if(dName==3) Day = "Salı"; if(dName==4) Day = "Çarşamba"; if(dName==5) Day = "Perşembe"; if(dName==6) Day = "Cuma HAYIRLI CUMALAR"; if(dName==7) Day = "Cumartesi"; if(mName==1) Month="Ocak"; if(mName==2) Month="Şubat"; if(mName==3) Month="Mart";
+if(mName==4) Month="Nisan"; if(mName==5) Month="Mayıs"; if(mName==6) Month="Haziran"; if(mName==7) Month="Temmuz"; if(mName==8) Month="Ağustos"; if(mName==9) Month="Eylül";
+if(mName==10) Month="Ekim"; if(mName==11) Month="Kasım"; if(mName==12) Month="Aralık";
+if ( yr > 99 )
+{
+yr_str =" ";
+if ( yr < 2000 ) yr += 1900;
+}var todaysDate =(" " + dayNr + " " + Month + yr_str + yr + "" + ", " + Day + ""); document.open(); document.write("<FONT face=arial SIZE=2 color=white>"+todaysDate+"</FONT>");// -->
+                                </script>
+                                
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="header_bottom">
+                        <div class="logo_area"><a href="@Url.Action("Index","Home")" class="logo"><img src="~/images/header.fw.png" alt=""></a></div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section id="navArea">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse" style="float:left;">
+                    <ul class="nav navbar-nav main_nav">
+                        <li class="active"><a href="@Url.Action("Index","Home")"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+                        @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                        {
+                            foreach (var item in db.kategoriler.ToList())
+                            {
+                                <li><a href="@Url.Action("kategori_detay","Home", new { @Id = item.kateID,@title=item.kategori})">@item.kategori</a></li>
+                            }
+                        }                        
+                    </ul>                    
+                </div>
+                <div style="float:right;margin-top:9px; margin-right:8px;">
+                    @using (Html.BeginForm("aramaYap", "Home", FormMethod.Get))
+                    {
+                        @Html.TextBox("aramaDegeri", null, new {placeholder = "Arama Yap",style= "padding-left:5px;border-radius:3px;font-family: 'Oswald',sans-serif;width:199px;" })
+                        <button type="submit" class="btn btn-success" style="border-radius:3px;background-color:#d083cf; border:0px;font-family: 'Oswald',sans-serif;">Arasana</button>
+
+                    }
+                </div>
+            </nav>            
+        </section>
+        <section id="newsSection">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="latest_newsarea">
+                        <span>Son Yazılar</span>
+                        <ul id="ticker01" class="news_sticker">
+                            
+                            @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                            {
+                                foreach (var item in db.news.OrderBy(x => x.eklenmeTarihi).ToList())
+                                {
+                                    <li><a href="@Url.Action("haber_detay","Home", new { @Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})"><img src="@(item.resim)" alt="">@item.haberBasligi</a></li>
+                                }
+                            }
+                        </ul>
+                        <div class="social_area">
+                            <ul class="social_nav">
+                                <li class="facebook"><a href="#"></a></li>
+                                <li class="twitter"><a href="#"></a></li>
+                                <li class="flickr"><a href="#"></a></li>
+                                <li class="pinterest"><a href="#"></a></li>
+                                <li class="googleplus"><a href="#"></a></li>
+                                <li class="vimeo"><a href="#"></a></li>
+                                <li class="youtube"><a href="#"></a></li>
+                                <li class="mail"><a href="#"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="contentSection">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                    <aside class="left_content">
+                        @RenderBody()
+                    </aside>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <aside class="right_content">
+                            <div class="latest_post" >
+                                <h2><span>Son Yazılar</span></h2>
+                                <div class="latest_post_container" style="overflow:hidden;height:430px;">
+                                    <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+                                    <ul class="latest_postnav">
+                                        @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                                        {
+                                            foreach (var item in db.news.OrderBy(x => x.eklenmeTarihi).Take(15).ToList())
+                                            {
+                                                <li>
+                                                    <div class="media">
+                                                        <a href="@Url.Action("haber_detay","Home", new { @Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="media-left"> <img alt="" src="@(item.resim)"> </a>
+                                                        <div class="media-body"> <a href="@Url.Action("haber_detay","Home", new { @Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="catg_title">@item.haberBasligi</a> </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                    <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
+                                </div>
+                            </div>
+
+
+                                <div class="single_sidebar">
+                                    <h2><span>Populer Yazılar</span></h2>
+                                    <ul class="spost_nav">
+                                        @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                                        {
+                                            foreach (var item in db.news.OrderByDescending(x => x.tiklanma).Take(6).ToList())
+                                            {
+                                                <li>
+                                                    <div class="media wow fadeInDown">
+                                                        <a href="@Url.Action("haber_detay","Home", new { @Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="media-left"> <img alt="" src="@(item.resim)"> </a>
+                                                        <div class="media-body"> <a href="@Url.Action("haber_detay","Home", new { @Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="catg_title">@item.haberBasligi</a> </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                        
+                                    </ul>
+                                </div>
+                                <div class="single_sidebar" style="background-color:#fff;">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Etiket Bulutu</a></li>
+                                        <li role="presentation"><a href="#video" aria-controls="profile" role="tab" data-toggle="tab">Video</a></li>
+                                        
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="category">
+
+                                            <script type="text/javascript" src="http://www.kralalemi.com/Html-Kodlari/etiket.js"></script>
+                                            <script type="text/javascript" src="http://www.kralalemi.com/Html-Kodlari/bulut.js"></script>
+                                            <canvas width="250" height="250" id="myCanvas">
+                                                <script type="text/javascript">
+                                                    window.onload = function() {
+                                                    TagCanvas.textColour = '#000000';
+                                                    TagCanvas.outlineColour = '#ff9999';
+                                                    TagCanvas.Start('myCanvas');};
+                                                </script>
+                                                <ul>
+                                                    @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                                                    {
+                                                        foreach (var item in db.kategoriler.ToList())
+                                                        {
+                                                            <li><a href="@Url.Action("kategori_detay","Home", new { @Id = item.kateID,@title=item.kategori})">@item.kategori</a></li>
+                                                        }
+                                                        foreach (var item in db.kategoriler.ToList())
+                                                        {
+                                                            <li><a href="@Url.Action("kategori_detay","Home", new { @Id = item.kateID,@title=item.kategori})">@item.kategori</a></li>
+                                                        }
+                                                        foreach (var item in db.kategoriler.ToList())
+                                                        {
+                                                            <li><a href="@Url.Action("kategori_detay","Home", new { @Id = item.kateID,@title=item.kategori})">@item.kategori</a></li>
+                                                        }
+                                                    }
+                                                    
+                                                </ul>
+                                            </canvas>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="video">
+                                            <div class="vide_area">
+                                                @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                                                {
+                                                    var video = db.videolar.OrderByDescending(x => x.tarih).Take(1).SingleOrDefault();
+                                                    <iframe width="100%" height="250" src="@(video.adres)" frameborder="0" allowfullscreen></iframe>
+                                                }
+                                                                                          
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <footer id="footer">
+            <div class="footer_top">
+                <div class="row">                    
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div class="footer_widget wow fadeInDown">
+                            <h2>ETIKETLER</h2>
+                            <ul class="tag_nav">
+                                @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                                {
+                                    foreach (var item in db.kategoriler.Select(x => new { x.kateID, x.kategori }).ToList())
+                                    {
+                                        <li><a href="@Url.Action("kategori_detay","Home", new { @Id = item.kateID,@title=item.kategori})">@item.kategori</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="footer_widget wow fadeInRightBig">
+                            <h2>IlETISIM</h2>
+                            @using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                            {
+                                var ilet= db.iletisim.SingleOrDefault();
+                                <p>@ilet.yazi</p>
+                                <address>
+                                    @ilet.adres
+                                    <br />Telefon: @ilet.tel
+                                </address>
+                            }
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_bottom">
+                <p class="copyright">Copyright &copy; @DateTime.Now.Year <a href="/Home/Index">Bilişim Dergisi</a> Yusuf AYHAN</p>
+                <p class="developer">Developed By Wpfreeware</p>
+            </div>
+        </footer>
+    </div>
+                    <script src="~/assets/js/jquery.min.js"></script>
+                    <script src="~/assets/js/wow.min.js"></script>
+                    <script src="~/assets/js/bootstrap.min.js"></script>
+                    <script src="~/assets/js/slick.min.js"></script>
+                    <script src="~/assets/js/jquery.li-scroller.1.0.js"></script>
+                    <script src="~/assets/js/jquery.newsTicker.min.js"></script>
+                    <script src="~/assets/js/jquery.fancybox.pack.js"></script>
+                    <script src="~/assets/js/custom.js"></script>
+
+</body>
+</html>

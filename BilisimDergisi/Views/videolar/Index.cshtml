@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebApplication1.DAL.videolar>
+
+@{
+    ViewBag.Title = "Videolar";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Videolar</h2>
+
+<p>
+    @Html.ActionLink("Yeni Kayıt", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Adres
+        </th>
+        <th>
+           Eklenme Zamanı
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.adres)
+        </td>
+        <td>
+            @WebApplication1.Models.zaman.GecenZamaniHesapla(Convert.ToDateTime(item.tarih))
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id=item.vID }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.vID })
+        </td>
+    </tr>
+}
+
+</table>

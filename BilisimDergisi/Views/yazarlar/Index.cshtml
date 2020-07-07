@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WebApplication1.DAL.yazarlar>
+
+@{
+    ViewBag.Title = "Yazarlar";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Yazarlar</h2>
+
+<p>
+    @Html.ActionLink("Yeni Kayıt", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Adı
+        </th>
+        <th>
+            Soyadı
+        </th>
+        <th>
+           Mail
+        </th>
+        <th>
+            Kullanıcı Adı
+        </th>
+        <th>
+            Şifre
+        </th>
+        <th>
+            Resim
+        </th>
+        <th>
+            Yetki
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.soyadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kullaniciAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sifre)
+        </td>
+        <td width="15%">
+            @if (item.P_resim == null)
+            {
+                <img src="~/Content/img/user-avatar.png" width="50%"/> 
+            }
+            else
+            {
+                <img src="@Html.DisplayFor(modelItem => item.P_resim)" width="80%" />
+            }
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.yetki)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id=item.yazarID }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.yazarID })
+        </td>
+    </tr>
+}
+
+</table>

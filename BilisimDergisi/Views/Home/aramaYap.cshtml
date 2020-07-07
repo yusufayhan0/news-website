@@ -1,0 +1,48 @@
+﻿@model List<WebApplication1.DAL.news>
+@{
+    ViewBag.Title = ViewBag.deger;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="single_page">
+
+    @if (Model != null)
+    {
+        using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+        {var sayac=0;
+            foreach (var item in Model)
+            {
+				sayac++;
+                var yazar = db.yazarlar.Where(x => x.yazarID == item.yazar).SingleOrDefault();
+                <div class="col-lg-6 col-md-6 col-sm-6" style="max-height:500px;">
+                    <div class="single_post_content">
+                        <div class="post_commentbox" style="margin-bottom:5px;"> <a href="#"><i class="fa fa-user"></i>@yazar.adi @yazar.soyadi</a> <span><i class="fa fa-calendar" style="padding-left:15px;"><span style="padding-left:5px;"><a>@WebApplication1.Models.zaman.GecenZamaniHesapla(Convert.ToDateTime(item.eklenmeTarihi)).ToString()</a></span></i></span> </div>
+                        <ul class="business_catgnav wow fadeInDown">
+                            <li>
+                                <figure class="bsbig_fig">
+                                    <a href="@Url.Action("haber_detay","Home", new { @Id = item.haberID,@title=item.haberBasligi})" class="featured_img"> <img alt="" src="@(item.resim)"> <span class="overlay"></span> </a>
+                                    <figcaption> <a href="@Url.Action("haber_detay","Home", new { @Id = item.haberID,@title=item.haberBasligi})">@item.haberBasligi</a> </figcaption>
+                                    @if (item.yazi.Length < 150)
+                                    {
+                                        <p>@WebApplication1.Models.htmlTemizle.detayKodTemizle(Convert.ToString(Html.Raw(item.yazi)))</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@WebApplication1.Models.htmlTemizle.kodTemizle(Convert.ToString(Html.Raw(item.yazi)), 150) ...</p>
+                                    }
+                                </figure>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+					if (sayac%2==0)
+                    {
+                        <div class="clearfix"></div>
+                    }
+            }
+        }
+    }
+    else
+    {
+        <h2>@ViewBag.deger</h2>
+    }
+</div>

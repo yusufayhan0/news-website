@@ -1,0 +1,223 @@
+﻿@model WebApplication1.Models.birlestir
+@{
+    ViewBag.Title = "Anasayfa";
+}
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="slick_slider">
+            @{foreach (var item in Model.slider)
+                {
+                    <div class="single_iteam">
+                        <a href="@Url.Action("haber_detay", "Home", new { @Id = item.haberID, @title = item.haberBasligi.Replace(" ", "-") })"> <img src="@(item.resim)" alt=""></a>
+                        <div class="slider_article">
+                            <h2><a class="slider_tittle" href="@Url.Action("haber_detay", "Home", new { @Id = item.haberID, @title = item.haberBasligi.Replace(" ", "-") })">@item.sliderBasligi</a></h2>
+                            @if (item.yazi.Length < 250)
+                            {
+                                <p>@WebApplication1.Models.htmlTemizle.detayKodTemizle(Convert.ToString(Html.Raw(item.yazi)))</p>
+                            }
+                            else
+                            {
+                                <p>@WebApplication1.Models.htmlTemizle.kodTemizle(Convert.ToString(Html.Raw(item.yazi)), 250) ...</p>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="single_post_content">
+    <h2><span>Teknoloji</span></h2>
+    <div class="single_post_content_left">
+        <ul class="business_catgnav  wow fadeInDown">
+            <li>
+                <figure class="bsbig_fig">
+
+                    <a href="@Url.Action("haber_detay", "Home", new { @Id = Model.tek1.haberID, @title = Model.tek1.haberBasligi.Replace(" ", "-") })" class="featured_img"> <img alt="" src="@(Model.tek1.resim)"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="@Url.Action("haber_detay", "Home", new { @Id = Model.tek1.haberID, @title = Model.tek1.haberBasligi.Replace(" ", "-") })">@(Model.tek1.haberBasligi)</a> </figcaption>
+                    @if (Model.tek1.yazi.Length < 250)
+                    {
+                        <p>@WebApplication1.Models.htmlTemizle.detayKodTemizle(Convert.ToString(Html.Raw(Model.tek1.yazi)))</p>
+                    }
+                    else
+                    {
+                        <p>@WebApplication1.Models.htmlTemizle.kodTemizle(Convert.ToString(Html.Raw(Model.tek1.yazi)), 250) ...</p>
+                    }
+
+                </figure>
+            </li>
+        </ul>
+    </div>
+    <div class="single_post_content_right">
+        <ul class="spost_nav">
+            @{foreach (var item in Model.tek2)
+                {
+                    <li>
+                        <div class="media wow fadeInDown">
+                            <a href="@Url.Action("haber_detay", "Home", new { @Id = item.haberID, @title = item.haberBasligi.Replace(" ", "-") })" class="media-left"> <img alt="" src="@(item.resim)"> </a>
+                            <div class="media-body"> <a href="@Url.Action("haber_detay", "Home", new { @Id = item.haberID, @title = item.haberBasligi.Replace(" ", "-") })" class="catg_title">@item.haberBasligi</a> </div>
+                        </div>
+                    </li>
+                }
+            }
+
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="fashion_technology_area">
+    <div class="fashion">
+        <div class="single_post_content">
+            <h2><span>Mobil</span></h2>
+            <ul class="business_catgnav wow fadeInDown">
+                <li>
+                    <figure class="bsbig_fig">
+                        <a href="@Url.Action("haber_detay","Home", new {@Id = Model.mob1.haberID,@title=Model.mob1.haberBasligi.Replace(" ","-")})" class="featured_img"> <img alt="" src="@(Model.mob1.resim)"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="@Url.Action("haber_detay","Home", new {@Id = Model.mob1.haberID,@title=Model.mob1.haberBasligi.Replace(" ","-")})">@(Model.mob1.haberBasligi)</a> </figcaption>
+                        @if (Model.mob1.yazi.Length < 250)
+                        {
+                        <p>@WebApplication1.Models.htmlTemizle.detayKodTemizle(Convert.ToString(Html.Raw(Model.mob1.yazi)))</p>
+                        }
+                        else
+                        {
+                        <p>@WebApplication1.Models.htmlTemizle.kodTemizle(Convert.ToString(Html.Raw(Model.mob1.yazi)), 250) ...</p>
+                        }
+                    </figure>
+                </li>
+            </ul>
+            <ul class="spost_nav">
+                @{
+                    foreach (var item in Model.mob2)
+                    {
+                        <li>
+                            <div class="media wow fadeInDown">
+                                <a href="@Url.Action("haber_detay","Home", new {@Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="media-left"> <img alt="" src="@(item.resim)"> </a>
+                                <div class="media-body"> <a href="@Url.Action("haber_detay","Home", new {@Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="catg_title">@(item.haberBasligi)</a> </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="technology">
+        <div class="single_post_content">
+            <h2><span>Donanım</span></h2>
+            <ul class="business_catgnav">
+                <li>
+                    <figure class="bsbig_fig wow fadeInDown">
+                        <a href="@Url.Action("haber_detay","Home", new {@Id = Model.don1.haberID,@title=Model.don1.haberBasligi.Replace(" ","-")})" class="featured_img"> <img alt="" src="@(Model.don1.resim)"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="@Url.Action("haber_detay","Home", new {@Id = Model.don1.haberID,@title=Model.don1.haberBasligi.Replace(" ","-")})">@Model.don1.haberBasligi</a> </figcaption>
+                        @if (Model.don1.yazi.Length < 250)
+                        {
+                        <p>@WebApplication1.Models.htmlTemizle.detayKodTemizle(Convert.ToString(Html.Raw(Model.don1.yazi)))</p>
+                        }
+                        else
+                        {
+                        <p>@WebApplication1.Models.htmlTemizle.kodTemizle(Convert.ToString(Html.Raw(Model.don1.yazi)), 250) ...</p>
+                        }
+
+                    </figure>
+                </li>
+            </ul>
+            <ul class="spost_nav">
+                @{
+                    foreach (var item in Model.don2)
+                    {
+                        <li>
+                            <div class="media wow fadeInDown">
+                                <a href="@Url.Action("haber_detay","Home", new {@Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="media-left"> <img alt="" src="@(item.resim)"> </a>
+                                <div class="media-body"> <a href="@Url.Action("haber_detay","Home", new {@Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="catg_title">@(item.haberBasligi)</a> </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="single_post_content">
+    <h2><span>Fotograflar</span></h2>
+    <ul class="photograph_nav  wow fadeInDown">
+        @{
+            foreach (var item in Model.foto)
+            {
+                <li>
+                    <div class="photo_grid">
+                        <figure class="effect-layla"> <a href="@Url.Action("haber_detay","Home", new {@Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="fancybox-buttons" data-fancybox-group="button" href="@(item.resim)" title="Photography Ttile 6"> <img src="@(item.resim)" alt="" /> </a> </figure>
+                    </div>
+                </li>
+            }
+        }
+
+    </ul>
+</div>
+
+
+
+<div class="single_post_content">
+    <h2><span>Oyun</span></h2>
+    <div class="single_post_content_left">
+        <ul class="business_catgnav">
+            <li>
+                <figure class="bsbig_fig  wow fadeInDown">
+                    @{
+                        <a class="featured_img" href="@Url.Action("haber_detay","Home", new {@Id = Model.oy1.haberID,@title=Model.oy1.haberBasligi.Replace(" ","-")})"> <img src="@(Model.oy1.resim)" alt=""> <span class="overlay"></span> </a>
+                        <figcaption> <a href="@Url.Action("haber_detay","Home", new {@Id = Model.oy1.haberID,@title=Model.oy1.haberBasligi.Replace(" ","-")})">@Model.oy1.haberBasligi</a> </figcaption>
+                        if (Model.oy1.yazi.Length < 250)
+                        {
+                            <p>@WebApplication1.Models.htmlTemizle.detayKodTemizle(Convert.ToString(Html.Raw(Model.oy1.yazi)))</p>
+                        }
+                        else
+                        {
+                            <p>@WebApplication1.Models.htmlTemizle.kodTemizle(Convert.ToString(Html.Raw(Model.oy1.yazi)), 250) ...</p>
+                        }
+                    }
+
+                </figure>
+            </li>
+        </ul>
+    </div>
+    <div class="single_post_content_right">
+        <ul class="spost_nav">
+            @{
+                foreach (var item in Model.oy2)
+                {
+                    <li>
+                        <div class="media wow fadeInDown">
+                            <a href="@Url.Action("haber_detay","Home", new {@Id = item.haberID,@title=item.haberBasligi.Replace(" ","-").Replace(" ","-")})" class="media-left"> <img alt="" src="@(item.resim)"> </a>
+                            <div class="media-body"> <a href="@Url.Action("haber_detay","Home", new {@Id = item.haberID,@title=item.haberBasligi.Replace(" ","-")})" class="catg_title">@item.haberBasligi</a> </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+

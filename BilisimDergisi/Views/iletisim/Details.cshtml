@@ -1,0 +1,50 @@
+﻿@model WebApplication1.DAL.iletisim
+
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>İletişim</h2>
+
+<div>
+    <h4>Detay</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Yazı
+        </dt>
+
+        <dd>
+            @Model.yazi
+        </dd>
+
+        <dt>
+            Adres
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adres)
+        </dd>
+
+        <dt>
+            Telefon
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tel)
+        </dd>
+
+        <dt>
+            Harita
+        </dt>
+
+        <dd>
+            <iframe src="@(Model.harita)" class="col-lg-5 col-md-5 col-sm-5" height="300" frameborder="0" style="border:0; margin-top:20px;" allowfullscreen></iframe>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Güncelle", "Edit", new { id = Model.iletisimID })
+</p>

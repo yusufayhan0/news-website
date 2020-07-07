@@ -1,0 +1,72 @@
+﻿@model WebApplication1.DAL.news
+
+@{
+    ViewBag.Title = "Yeni Kayıt";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Haberler</h2>
+
+
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Yeni Kayıt</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Haber Başlığı</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.haberBasligi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.haberBasligi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Slider Başlığı</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sliderBasligi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sliderBasligi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Yazı</label>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.yazi, 20, 40, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.yazi, "", new { @class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Kategori</label>
+            <div class="col-md-10">
+                @Html.DropDownList("kategori", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.kategori, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Resim</label>
+            <div class="col-md-10">
+                <input type="file" name="file" class="form-control" />
+                <p class = "text-danger">@ViewBag.bosmesaj</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Oluştur" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'textarea' });</script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

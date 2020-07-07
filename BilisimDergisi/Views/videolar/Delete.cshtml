@@ -1,0 +1,40 @@
+﻿@model WebApplication1.DAL.videolar
+
+@{
+    ViewBag.Title = "Sil";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Videolar</h2>
+
+<h3>Kayıt Silinsin mi ?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Adres
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adres)
+        </dd>
+
+        <dt>
+            Tarih
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tarih)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Geri Dön", "Index")
+        </div>
+    }
+</div>

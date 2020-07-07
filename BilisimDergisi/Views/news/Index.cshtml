@@ -1,0 +1,84 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<WebApplication1.DAL.news>
+
+@{
+    ViewBag.Title = "Haberler";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Haberler</h2>
+
+<p>
+    @Html.ActionLink("Yeni Kayıt", "Create")
+</p>
+<table class="table">
+    <tr class="bas_harfi">
+        <th>
+            Haber Başlığı
+        </th>
+        <th>
+           Slider Başlığı
+        </th>
+        <th>
+            Yazı
+        </th>
+        <th>
+            Resim
+        </th>
+        <th>
+            Eklenme Zamanı
+        </th>
+        <th>
+            Yazar
+        </th>
+        <th>
+            Tıklanma
+        </th>
+        <th>
+            Kategori
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @item.haberBasligi
+        </td>
+        <td>
+            @item.sliderBasligi
+        </td>
+        <td>
+            @{ string yazilar;
+                yazilar = @WebApplication1.Models.htmlTemizle.detayKodTemizle(Convert.ToString(Html.Raw(item.yazi.ToString())));
+                yazilar.Substring(0,10);
+                }
+            ...
+        </td>
+        <td width="8%">
+            <img src="@Html.DisplayFor(modelItem => item.resim)" width="100%" />
+        </td>
+        <td>
+            @WebApplication1.Models.zaman.GecenZamaniHesapla(Convert.ToDateTime(item.eklenmeTarihi))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.yazarlar.adi) @Html.DisplayFor(modelItem => item.yazarlar.soyadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tiklanma)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kategoriler.kategori)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id=item.haberID }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.haberID }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.haberID })
+        </td>
+    </tr>
+}
+
+</table>
+@Html.PagedListPager(Model, _sayfaNo => Url.Action("Index", "news", new { SayfaNo = _sayfaNo }))

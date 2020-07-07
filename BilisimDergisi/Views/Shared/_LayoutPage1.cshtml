@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+    <link rel="SHORTCUT ICON" href="~/images/favicon.ico">
+    <style>
+        .bas_harfi th{text-transform:capitalize;}
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Siteye Git", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @if (Session["ID"] != null)
+                {
+                    if (Convert.ToBoolean(Session["yetki"]) == true)
+                    {
+                        @Html.ActionLink("Kategori", "Index", "kategori", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Yazar", "Index", "yazarlar", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Video", "Index", "videolar", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Hakkımızda", "Details", "hakkimizdas", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("İletişim", "Details", "iletisim", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Profil", "Edit", "yazarlar", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                }
+                else
+                {
+                    Response.Redirect("/Hata/hata3");
+                }
+                
+                @Html.ActionLink("Haber", "Index", "news", new { area = "" }, new { @class = "navbar-brand" })
+                
+            </div>
+            @using (Html.BeginForm("cikis", "Home"))
+            {
+                using (WebApplication1.DAL.bilisimDergisiEntities1 db = new WebApplication1.DAL.bilisimDergisiEntities1())
+                {
+                    var kullanici = Convert.ToString(Session["kadi"]);
+                    var resim = db.yazarlar.Where(x => x.kullaniciAdi == kullanici).SingleOrDefault();
+                    if (resim.P_resim == null)
+                    {
+                        <div style="float:right;"><img src="~/Content/img/user-avatar.png" width="50" height="50" style="float:left; margin-right:5px;" /> <a class="navbar-brand">Hoş Geldin @Session["kadi"]</a><input id="Submit1" type="submit" value="Çıkış Yap" style="margin-top:10px;" /></div>
+                    }
+                    else
+                    {
+                        <div style="float:right;"><img src="@(resim.P_resim)" width="50" height="50" style="float:left; margin-right:5px;" /> <a class="navbar-brand">Hoş Geldin @Session["kadi"]</a><input id="Submit1" type="submit" value="Çıkış Yap" style="margin-top:10px;" /></div>
+                    }
+
+                }
+            }
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>Copyright &copy; @DateTime.Now.Year <a href="/Home/Index">Bilişim Dergisi</a> Yusuf AYHAN</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

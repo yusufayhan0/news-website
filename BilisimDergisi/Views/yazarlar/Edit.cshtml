@@ -1,0 +1,102 @@
+﻿@model WebApplication1.DAL.yazarlar
+
+@{
+    ViewBag.Title = "Güncelle";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Yazarlar</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Güncelle</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.yazarID)
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Adı</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Soyadı</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.soyadi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.soyadi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Mail</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Kullanıcı Adı</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.kullaniciAdi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.kullaniciAdi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Şifre</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sifre, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                @Html.ValidationMessageFor(model => model.sifre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Resim</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.P_resim, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.P_resim, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (Convert.ToBoolean(Session["yetki"]) == true)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">Yetki</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.yetki)
+                        @Html.ValidationMessageFor(model => model.yetki, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @if (Convert.ToBoolean(Session["yetki"]) == true)
+    {
+        @Html.ActionLink("Geri Dön", "Index")
+    }
+    else
+    {
+        @Html.ActionLink("Geri Dön", "Index","news")
+    }
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
